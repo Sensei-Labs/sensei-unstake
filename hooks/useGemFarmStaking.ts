@@ -1,20 +1,20 @@
-import { findFarmerPDA } from "@gemworks/gem-farm-ts"
-import { SignerWalletAdapter } from "@solana/wallet-adapter-base"
-import { useEffect, useState, useCallback } from "react"
-import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react"
-import { BN } from "@project-serum/anchor"
-import { PublicKey } from "@solana/web3.js"
+import {findFarmerPDA} from "@gemworks/gem-farm-ts"
+import {SignerWalletAdapter} from "@solana/wallet-adapter-base"
+import {useEffect, useState, useCallback} from "react"
+import {useAnchorWallet, useConnection} from "@solana/wallet-adapter-react"
+import {BN} from "@project-serum/anchor"
+import {PublicKey} from "@solana/web3.js"
 
-import useWalletNFTs, { NFT } from "hooks/useWalletNFTs"
-import { initGemBank } from "lib/gem-farm/common/gem-bank"
-import { GemFarm, initGemFarm } from "lib/gem-farm/common/gem-farm"
-import { getNFTMetadataForMany } from "utils/nfts"
-import { GemBank } from "lib/gem-farm/common/gem-bank"
+import useWalletNFTs, {NFT} from "hooks/useWalletNFTs"
+import {initGemBank} from "lib/gem-farm/common/gem-bank"
+import {GemFarm, initGemFarm} from "lib/gem-farm/common/gem-farm"
+import {getNFTMetadataForMany} from "utils/nfts"
+import {GemBank} from "lib/gem-farm/common/gem-bank"
 
 const useGemFarmStaking = (farmId: string) => {
-  const { connection } = useConnection()
+  const {connection} = useConnection()
   const wallet = useAnchorWallet() as SignerWalletAdapter
-  const { walletNFTs, fetchNFTs } = useWalletNFTs()
+  const {walletNFTs, fetchNFTs} = useWalletNFTs()
 
   const [farmAccount, setFarmAccount] = useState<any>(null) // @TODO add type to farmAccount
   const [farmerAccount, setFarmerAccount] = useState<any>(null) // @TODO add type to farmerAccount
@@ -26,6 +26,7 @@ const useGemFarmStaking = (farmId: string) => {
   const [gemBankClient, setGemBankClient] = useState<GemBank | null>(null)
   const [gemFarmClient, setGemFarmClient] = useState<GemFarm | null>(null)
   const [feedbackStatus, setFeedbackStatus] = useState("")
+  const [foundGDRs, setFoundGDRs] = useState<number>(0)
 
   const fetchFarmerAccount = async (
     farmClient: GemFarm,
@@ -111,12 +112,14 @@ const useGemFarmStaking = (farmId: string) => {
           /**
            * Fetch GDR (Gem Deposit Receipts) from the farmer vault
            */
-          const foundGDRs = await gemBankClient.fetchAllGdrPDAs(
+          const _foundGDRs = await gemBankClient.fetchAllGdrPDAs(
             farmerAccount.vault
           )
 
-          const mints = foundGDRs.map((gdr: any) => {
-            return { mint: gdr.account.gemMint }
+          // setFoundGDRs(foundGDRs)
+
+          const mints = _foundGDRs.map((gdr: any) => {
+            return {mint: gdr.account.gemMint}
           })
 
           /** Fetch metadatas for Vault NFTs */
@@ -124,6 +127,8 @@ const useGemFarmStaking = (farmId: string) => {
             mints,
             connection
           )
+
+          console.log({mints, _foundGDRs});
 
           /** Transform to use on the UI */
 
@@ -188,7 +193,7 @@ const useGemFarmStaking = (farmId: string) => {
     if (!gemBankClient)
       throw new Error("No Gem Bank client has been initialized.")
 
-    const { txSig } = await gemBankClient.depositGemWallet(
+    const {txSig} = await gemBankClient.depositGemWallet(
       new PublicKey(farmAccount.bank),
       new PublicKey(farmerAccount.vault),
       new BN(1),
@@ -207,7 +212,7 @@ const useGemFarmStaking = (farmId: string) => {
     if (!gemBankClient)
       throw new Error("No Gem Bank client has been initialized.")
 
-    const { txSig } = await gemBankClient.withdrawGemWallet(
+    const {txSig} = await gemBankClient.withdrawGemWallet(
       farmAccount.bank,
       farmerAccount.vault,
       new BN(1),
@@ -269,7 +274,7 @@ const useGemFarmStaking = (farmId: string) => {
       throw new Error("No Gem Bank client has been initialized.")
 
     setFeedbackStatus("Staking...")
-    const { txSig } = await gemFarmClient.stakeWallet(new PublicKey(farmId!))
+    const {txSig} = await gemFarmClient.stakeWallet(new PublicKey(farmId!))
 
     await connection.confirmTransaction(txSig)
 
@@ -284,7 +289,7 @@ const useGemFarmStaking = (farmId: string) => {
       throw new Error("No Gem Bank client has been initialized.")
 
     setFeedbackStatus("Unstaking wallet...")
-    const { txSig } = await gemFarmClient.unstakeWallet(new PublicKey(farmId!))
+    const {txSig} = await gemFarmClient.unstakeWallet(new PublicKey(farmId!))
 
     await connection.confirmTransaction(txSig)
 
@@ -298,7 +303,7 @@ const useGemFarmStaking = (farmId: string) => {
       throw new Error("No Gem Bank client has been initialized.")
 
     setFeedbackStatus("Claiming rewards...")
-    const { txSig } = await gemFarmClient.claimWallet(
+    const {txSig} = await gemFarmClient.claimWallet(
       new PublicKey(farmId),
       new PublicKey(farmAccount.rewardA.rewardMint!),
       new PublicKey(farmAccount.rewardB.rewardMint!)
@@ -316,7 +321,7 @@ const useGemFarmStaking = (farmId: string) => {
       throw new Error("No Gem Bank client has been initialized.")
 
     setFeedbackStatus("Initializing farmer...")
-    const { txSig } = await gemFarmClient.initFarmerWallet(
+    const {txSig} = await gemFarmClient.initFarmerWallet(
       new PublicKey(farmId)
     )
 
@@ -332,7 +337,7 @@ const useGemFarmStaking = (farmId: string) => {
 
     console.log("[Staking Hook] Refreshing farmer...")
     setFeedbackStatus("Refreshing rewards...")
-    const { txSig } = await gemFarmClient.refreshFarmerWallet(
+    const {txSig} = await gemFarmClient.refreshFarmerWallet(
       new PublicKey(farmId),
       farmerAccount.identity
     )
@@ -348,8 +353,8 @@ const useGemFarmStaking = (farmId: string) => {
 
   const availableA = farmerAccount?.rewardA
     ? farmerAccount.rewardA.accruedReward
-        .sub(farmerAccount.rewardA.paidOutReward)
-        .toString()
+      .sub(farmerAccount.rewardA.paidOutReward)
+      .toString()
     : null
 
   return {

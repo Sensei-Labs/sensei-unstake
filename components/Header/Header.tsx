@@ -1,18 +1,14 @@
 /** @jsxImportSource theme-ui */
 import Link from "next/link"
-import { Button, Container, Flex, Input, Text } from "@theme-ui/components"
+import {Button, Container, Flex, Text} from "@theme-ui/components"
 
 import WalletManager from "@/components/WalletManager/WalletManager"
-import { Dispatch, SetStateAction, useState } from "react"
-import { CloseIcon, MenuIcon } from "../icons"
+import {useState} from "react"
+import {CloseIcon, MenuIcon} from "../icons"
 
-type Props = {
-  farmId?: string
-  setFarmId?: Dispatch<SetStateAction<string>>
-}
-const Header = ({ farmId, setFarmId }: Props) => {
+type Props = {}
+const Header = (props: Props) => {
   const [isMobileMenuActive, setIsMobileMenuActive] = useState(false)
-  const [isChangingFarmId, setIsChangingFarmId] = useState(false)
 
   return (
     <Flex
@@ -34,22 +30,15 @@ const Header = ({ farmId, setFarmId }: Props) => {
           p=".8rem"
         >
           <Link href="/" passHref>
-            <Flex as="a" sx={{ alignItems: "center", flexDirection: "column" }}>
-              <Flex sx={{ alignItems: "center" }}>
-                <Text as="h1" variant="headingSpecial" ml=".4rem">
-                  GEM
-                </Text>
-
+            <Flex as="a" sx={{alignItems: "center", flexDirection: "column"}}>
+              <Flex sx={{alignItems: "center"}}>
                 <img
-                  sx={{
-                    maxHeight: "4.8rem",
-                  }}
-                  src="/images/gemtransparent.gif"
+                  src="/favicon-brand.png"
                   alt="Gemworks"
                 />
 
-                <Text as="h1" variant="headingSpecial" ml=".4rem">
-                  FARM
+                <Text as="h1" sx={{fontFamily: 'go3v2'}} ml=".4rem">
+                  Katana
                 </Text>
               </Flex>
               {/* <Text
@@ -62,15 +51,6 @@ const Header = ({ farmId, setFarmId }: Props) => {
               </Text> */}
             </Flex>
           </Link>
-          <Text
-            variant="small"
-            sx={{
-              marginRight: "auto",
-            }}
-          >
-            &nbsp;&nbsp;&nbsp;&#8226;&nbsp;
-            {process.env.NEXT_PUBLIC_CONNECTION_NETWORK}
-          </Text>
 
           <Flex
             as="nav"
@@ -121,40 +101,14 @@ const Header = ({ farmId, setFarmId }: Props) => {
                 alignSelf: "flex-end",
                 padding: ".8rem",
 
-                ...(!isMobileMenuActive && { display: "none" }),
+                ...(!isMobileMenuActive && {display: "none"}),
               }}
               onClick={() => setIsMobileMenuActive(false)}
             >
-              <CloseIcon />
+              <CloseIcon/>
             </Button>
-            {isChangingFarmId && (
-              <Input
-                sx={{
-                  fontSize: "1.1rem",
-                  padding: ".4rem",
-                  border: "none",
-                  borderBottom: "1px solid",
-                  borderRadius: 0,
-                  width: "auto",
-                }}
-                value={farmId}
-                onChange={(e) => setFarmId(e.target.value)}
-              />
-            )}
 
-            <a
-              tabIndex={0}
-              sx={{
-                margin: "0 auto",
-                fontSize: "1.1rem",
-                whiteSpace: "nowrap",
-              }}
-              onClick={() => setIsChangingFarmId((prev) => !prev)}
-            >
-              (Change Farm ID)
-            </a>
-
-            <WalletManager />
+            <WalletManager/>
           </Flex>
           <Button
             sx={{
@@ -165,7 +119,7 @@ const Header = ({ farmId, setFarmId }: Props) => {
             }}
             onClick={() => setIsMobileMenuActive(true)}
           >
-            <MenuIcon />
+            <MenuIcon/>
           </Button>
         </Flex>
       </Container>

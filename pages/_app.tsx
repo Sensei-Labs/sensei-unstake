@@ -1,15 +1,12 @@
 import React from "react"
 import Head from "next/head"
 import { ThemeProvider } from "theme-ui"
-import Router, { AppProps } from "next/dist/shared/lib/router/router"
+import { AppProps } from "next/dist/shared/lib/router/router"
 import dynamic from "next/dynamic"
 
 // import "nprogress/nprogress.css" //styles of nprogress
 // import "normalize.css/normalize.css"
 import "@solana/wallet-adapter-react-ui/styles.css"
-
-// @ts-ignore
-import withGA from "next-ga"
 
 import defaultTheme from "../styles/theme"
 
@@ -28,7 +25,7 @@ function App(props: AppProps) {
   return (
     <ThemeProvider theme={defaultTheme}>
       <Head>
-        <title>Gem Farm UI</title>
+        <title>Sensei Labs - Unstake</title>
         {/** Load font styles directly on the document to prevent flashes */}
         <link href="/fonts/fonts.css" rel="stylesheet" />
       </Head>
@@ -40,4 +37,4 @@ function App(props: AppProps) {
   )
 }
 
-export default withGA(process.env.NEXT_PUBLIC_GA_ID, Router)(App)
+export default App;

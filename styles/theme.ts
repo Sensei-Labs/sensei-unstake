@@ -25,22 +25,15 @@ const theme: Theme = {
     background: "rgb(4, 4, 3)",
     text: "rgb(226, 217, 211)",
     primary: "rgb(48, 114, 180, .7)",
+    warning: "#F5A524",
+    info: "#1890FF",
+    warningOpacity: "#F5A5244D",
+    infoOpacity: "#1890FF4D",
+    error: "#F31260",
     primaryGradient: getGradient("rgb(48, 114, 180, .7)"),
     heading: "rgb(226, 217, 211)",
     background2: "#1E1E24",
     backgroundGradient: getGradient("rgb(4, 4, 3)"),
-    // modes: {
-    //   light: {
-    //     background: "rgb(226, 217, 211)",
-    //     text: "rgb(4, 4, 3)",
-    //     primary: "rgb(48, 114, 180, .7)",
-    //     primaryGradient: getGradient("rgb(48, 114, 180, .7)"),
-    //     heading: "#1E1E24",
-    //     background2: "#1E1E24",
-    //     backgroundGradient: getGradient("rgb(226, 217, 211)")
-    //   }
-    // }
-    error: "#B00020",
     success: "#5cb85c",
   },
 
@@ -55,7 +48,16 @@ const theme: Theme = {
     heading:
       'AvertaStd-Bold, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
   },
-
+  alerts: {
+    warning: {
+      color: 'white',
+      bg: 'warningOpacity',
+    },
+    info: {
+      color: 'white',
+      bg: 'infoOpacity',
+    },
+  },
   buttons: {
     primary: {
       display: "flex",
@@ -218,7 +220,7 @@ const theme: Theme = {
 
       body: {
         /** Default text styles */
-        fontSize: "1.4rem",
+        fontSize: "16px",
         fontFamily:
           'AvertaStd-Regular, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", sans-serif',
         lineHeight: 1.45,
