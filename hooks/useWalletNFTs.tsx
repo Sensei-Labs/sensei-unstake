@@ -41,12 +41,12 @@ const useWalletNFTs = (
 
     const filtered = creators
       ? NFTs.filter((NFT) => {
-          const obj = NFT.onchainMetadata?.data?.creators?.find((value) => {
-            return creators.indexOf(value.address) !== -1
-          })
-
-          return obj
+        const obj = NFT.onchainMetadata?.data?.creators?.find((value) => {
+          return creators.indexOf(value.address) !== -1
         })
+
+        return obj
+      })
       : NFTs
 
     setWalletNFTs(filtered)

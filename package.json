@@ -11,9 +11,9 @@
   "dependencies": {
     "@ant-design/icons": "^5.0.1",
     "@emotion/react": "^11.8.2",
-    "@gemworks/gem-farm-ts": "^0.26.4",
+    "@gemworks/gem-farm-ts": "0.26.3",
     "@mdx-js/react": "1.6.22",
-    "@metaplex-foundation/js": "^0.18.3",
+    "@metaplex-foundation/js": "^0.13.3",
     "@metaplex/js": "^4.12.0",
     "@solana/spl-token": "^0.3.7",
     "@solana/wallet-adapter-react": "^0.15.4",
