@@ -1,9 +1,9 @@
-import React, { FC, useMemo } from "react"
+import React, {FC, useMemo} from "react"
 import {
   ConnectionProvider,
   WalletProvider,
 } from "@solana/wallet-adapter-react"
-import { WalletAdapterNetwork } from "@solana/wallet-adapter-base"
+import {WalletAdapterNetwork} from "@solana/wallet-adapter-base"
 import {
   LedgerWalletAdapter,
   PhantomWalletAdapter,
@@ -15,15 +15,12 @@ import {
 } from "@solana/wallet-adapter-wallets"
 import {
   WalletModalProvider,
-  WalletDisconnectButton,
-  WalletMultiButton,
 } from "@solana/wallet-adapter-react-ui"
-import { clusterApiUrl } from "@solana/web3.js"
 
 // Default styles that can be overridden by your app
 require("@solana/wallet-adapter-react-ui/styles.css")
 
-const Wallet: FC = ({ children }: { children: React.ReactChild }) => {
+const Wallet: FC = ({children}: { children: React.ReactNode }) => {
   // The network can be set to 'devnet', 'testnet', or 'mainnet-beta'.
   const network = process.env
     .NEXT_PUBLIC_CONNECTION_NETWORK as WalletAdapterNetwork
@@ -40,11 +37,11 @@ const Wallet: FC = ({ children }: { children: React.ReactChild }) => {
     () => [
       new PhantomWalletAdapter(),
       new SlopeWalletAdapter(),
-      new SolflareWalletAdapter({ network }),
+      new SolflareWalletAdapter({network}),
       new TorusWalletAdapter(),
       new LedgerWalletAdapter(),
-      new SolletWalletAdapter({ network }),
-      new SolletExtensionWalletAdapter({ network }),
+      new SolletWalletAdapter({network}),
+      new SolletExtensionWalletAdapter({network}),
     ],
     [network]
   )
