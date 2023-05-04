@@ -1,6 +1,6 @@
-import { findFarmerPDA } from "@gemworks/gem-farm-ts"
+import { findFarmerPDA } from "gem-farm-fix"
 import { SignerWalletAdapter } from "@solana/wallet-adapter-base"
-import { useEffect, useState, useCallback } from "react"
+import { useEffect, useState } from "react"
 import { useAnchorWallet, useConnection } from "@solana/wallet-adapter-react"
 import { BN } from "@project-serum/anchor"
 import { PublicKey } from "@solana/web3.js"
