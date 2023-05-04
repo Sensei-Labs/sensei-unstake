@@ -22,7 +22,6 @@ const StakePage = () => {
     handleMoveToWalletButtonClick,
     handleVaultItemClick,
   } = useGemFarmStaking(farmId)
-
   const {publicKey} = useWallet()
 
   return (
